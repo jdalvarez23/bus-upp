@@ -37,7 +37,6 @@
 <script type="text/javascript">
   // Execute when register form is submitted
   $('#register_Form').on('submit', function(e) {
-    e.preventDefault();
     // Initialization phase
     var submittedData = $(this).serializeArray(); // initialize serialized array of form data variable
     var dataObjects = {}; // initialize data object variable
@@ -51,7 +50,7 @@
         dataObjects[field.name] = field.value; // set object key values
       } else {
         displayError("#sign_Up_Page_Alert", 'Values cannot be empty.');
-        return;
+        return false;
       }
     }
 
@@ -95,5 +94,7 @@
       dataObjects = {}; // empty data object variable
       submittedData = ""; // empty serialized array of form data variable
     }
+
+    e.preventDefault();
   });
 </script>
