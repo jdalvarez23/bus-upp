@@ -53,16 +53,18 @@
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
+        } else if (form.checkValidity() == true) {
+          form.classList.add('was-validated');
+          submitForm(); // method called to submit form
         }
-        form.classList.add('was-validated');
       }, false);
     });
   }, false);
 })();
 </script>
 <script type="text/javascript">
-  // Execute when register form is submitted
-  $('#register_Form').on('submit', function(e) {
+  // Execute when register form has been validated
+  function submitForm() {
     // Initialization phase
     var submittedData = $('#register_Form').serializeArray(); // initialize serialized array of form data variable
     var dataObjects = {}; // initialize data object variable
