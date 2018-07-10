@@ -44,13 +44,13 @@
     $("#register_Form_Button").click(function() {
       // Fetch form to apply custom Boostrap validation styles to
       var form = $("#register_Form");
-      alert(form.prop('id')); // test to ensure calling form correctly
+      //alert(form.prop('id')); // test to ensure calling form correctly
 
       if (form[0].checkValidity === false){
         event.preventDefault();
         event.stopPropagation();
         form.addClass('was-validated');
-      } else if (form[0].checkValidity === true) {
+      } else if (form[0].checkValidity() == true) {
         form.addClass('was-validated');
         submitForm(); // method called to submit form
       }
