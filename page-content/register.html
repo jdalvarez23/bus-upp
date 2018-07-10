@@ -51,11 +51,10 @@
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
-        } else if (form.checkValidity() == true) {
-          console.log("Valid");
+        }
+          console.log("Valid...");
           form.classList.add('was-validated');
           submitForm(); // method called to submit form
-        }
       }, false);
     });
   }, false);
