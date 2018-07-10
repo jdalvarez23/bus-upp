@@ -39,8 +39,6 @@ function fetchData() {
         db.users.get(1, function(user) {
           userInformation = user; // set user data to variable
           console.log(userInformation);
-          console.log(user.name);
-          $('#first_Name_Display').text(user.name); // set text to user name
         });
         displayPage("home"); // display the home page
         // Execute if no users found in indexedDB
