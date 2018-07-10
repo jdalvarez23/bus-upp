@@ -36,7 +36,7 @@
 </div>
 <script type="text/javascript">
   // Execute when register form is submitted
-  $('body').on('submit', '#register_Form',function(e) {
+  $('#register_Form').on('submit', function(e) {
     e.preventDefault();
     // Initialization phase
     var submittedData = $(this).serializeArray(); // initialize serialized array of form data variable
@@ -60,7 +60,7 @@
       // Execute if field value is empty
       if (field.value == "") {
         displayError("#sign_Up_Page_Alert", 'Values cannot be empty.');
-        error = true;
+        error = true; // set error variable to true
         return;
       } else {
         dataObjects[field.name] = field.value; // set object key values
@@ -91,7 +91,7 @@
     // Execute if no error is present
     if (error != true) {
       writeData(attempt, dataObjects); // method called to write user information to indexedDB
-      error = false;
+      error = false; // set error variable to false
     }
   });
 </script>
