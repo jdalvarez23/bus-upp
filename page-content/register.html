@@ -12,15 +12,21 @@
         <p id="alert_Description" class="mb-0"></p>
       </div>
       <h4 id="getStarted_Header" class="text-center">Let's get started!</h4>
-      <form id="register_Form">
+      <form id="register_Form" class="needs-validation" novalidate>
         <fieldset>
           <div class="form-group">
             <label for="first_Name">First Name</label>
-            <input type="text" name="name" class="form-control" id="first_Name" placeholder="Enter First Name">
+            <input type="text" name="name" class="form-control" id="first_Name" placeholder="Enter First Name" required>
+            <div class="invalid-feedback">
+              Please provide a valid first name.
+            </div>
           </div>
           <p><span class="brand-font">BusUp!</span> lets you see the forecast for your location. Please enter your location below:</p>
           <div class="input-group">
-            <input type="text" name="location" class="form-control" id="location" placeholder="Enter Location (City, State)">
+            <input type="text" name="location" class="form-control" id="location" placeholder="Enter Location (City, State)" required>
+            <div class="invalid-feedback">
+              Please provide a valid location.
+            </div>
             <div class="input-group-append">
               <!-- map-marker-alt -->
               <button class="btn btn-info" type="button" title="Location"><i class="fas fa-location-arrow fa-lg"></i></button>
@@ -34,37 +40,39 @@
     </div>
   </div>
 </div>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 <script type="text/javascript">
   // Execute when register form is submitted
-  $('#register_Form_Button').on('click', function(e) {
+  $('#register_Form').on('submit', function(e) {
     // Initialization phase
     var submittedData = $('#register_Form').serializeArray(); // initialize serialized array of form data variable
     var dataObjects = {}; // initialize data object variable
     var attempt; // initialize attempt variable
-    var error = false; // initialize error variable
     dataObjects.registered = "true"; // set registered value in object to true
 
     // Processing phase
     for (var i = 0; i < submittedData.length; i++) {
-      if (submittedData[i].value != "") {
-        dataObjects[field.name] = field.value; // set object key values
-      } else {
-        displayError("#sign_Up_Page_Alert", 'Values cannot be empty.');
-        return false;
-      }
+      dataObjects[field.name] = field.value; // set object key values
     }
-
-
-    $(submittedData).each(function(i, field) {
-      // Execute if field value is empty
-      if (field.value == "") {
-        displayError("#sign_Up_Page_Alert", 'Values cannot be empty.');
-        error = true; // set error variable to true
-        return;
-      } else {
-        dataObjects[field.name] = field.value; // set object key values
-      }
-    });
 
     // Execute if location meets regular expression syntax
     if (/[\w ]+, \w{2}/.test(dataObjects['location'])) {
@@ -88,13 +96,6 @@
     }
 
     // Execute if no error is present
-    if (error != true) {
       writeData(attempt, dataObjects); // method called to write user information to indexedDB
-      error = false; // set error variable to false
-      dataObjects = {}; // empty data object variable
-      submittedData = ""; // empty serialized array of form data variable
-    }
-
-    e.preventDefault();
   });
 </script>
