@@ -63,6 +63,8 @@ function writeData(type, data) {
 
     db.transaction('rw', db.users, function () {
       db.users.add(data); // write data to user's table
+      console.log('Fetching data again...');
+      fetchData(); // method called to fetch user information from indexedDB
     }).catch(function(err) { // execute if error occurs
       console.error(err.stack || err);
     });
@@ -80,12 +82,14 @@ function writeData(type, data) {
           message: "Successfully updated information!",
           callback: function() {
             console.log('Fetching data again...');
+            fetchData(); // method called to fetch user information from indexedDB
           }
         });
       // Execute if data returned is null
       } else if (updated == 0) {
         console.log("Nothing to update!");
         console.log('Fetching data again...');
+        fetchData(); // method called to fetch user information from indexedDB
       // Execute if no data is returned
       } else {
         console.log ("Failed to update!");
@@ -95,11 +99,11 @@ function writeData(type, data) {
           message: "There seems to be an error updating your information, please try again later!",
           callback: function() {
             console.log('Fetching data again...');
+            fetchData(); // method called to fetch user information from indexedDB
           }
         });
       }
     });
-    fetchData(); // method called to fetch user information from indexedDB
   }
 }
 
