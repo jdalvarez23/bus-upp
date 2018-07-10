@@ -92,6 +92,7 @@
     if (error != true) {
       writeData(attempt, dataObjects); // method called to write user information to indexedDB
       error = false; // set error variable to false
+      dataObjects = {}; // initialize data object variable
     }
   });
 </script>
