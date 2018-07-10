@@ -67,8 +67,8 @@
 
     // Processing phase
     $(submittedData).each(function(i, field) {
-+      dataObjects[field.name] = field.value; // set respective values to field names
-+    });
+      dataObjects[field.name] = field.value; // set respective values to field names
+    });
 
     // Execute if location meets regular expression syntax
     if (/[\w ]+, \w{2}/.test(dataObjects['location'])) {
