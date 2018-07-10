@@ -1,0 +1,8 @@
+body {
+  background: url('http://www.hdwallpapersfreedownload.com/uploads/large/cities/chicago-hd-photos.jpg') no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  background-position: 70% 0%;
+}

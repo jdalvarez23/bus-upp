@@ -1,0 +1,59 @@
+body {
+  width: 100%;
+}
+
+.navbar-brand {
+  font-family: 'Pacifico', cursive;
+  text-transform: none;
+}
+
+.brand-font {
+  font-family: 'Pacifico', cursive;
+  text-transform: none;
+}
+
+select {
+  height: 3rem !important;
+}
+
+.wi-md {
+  font-size: 65px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #1a1a1a;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader_Center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.hide {
+  display: none !important;
+}
+
+.bootbox-close-button {
+  padding: 0px !important;
+  margin: 0 !important;
+}

@@ -1,0 +1,37 @@
+<div id="sign_Up_Page" class="container">
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <h1 class="mt-5">Welcome to <span class="brand-font">BusUp!</span></h1>
+      <p class="lead">An app created to keep you informed!</p>
+      <hr>
+    </div>
+    <div class="col-md-6 offset-md-3">
+      <div id="sign_Up_Page_Alert" class="alert alert-danger hide">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p id="alert_Description" class="mb-0"></p>
+      </div>
+      <h4 id="getStarted_Header" class="text-center">Let's get started!</h4>
+      <form id="register_Form">
+        <fieldset>
+          <div class="form-group">
+            <label for="first_Name">First Name</label>
+            <input type="text" name="name" class="form-control" id="first_Name" placeholder="Enter First Name">
+          </div>
+          <p><span class="brand-font">BusUp!</span> lets you see the forecast for your location. Please enter your location below:</p>
+          <div class="input-group">
+            <input type="text" name="location" class="form-control" id="location" placeholder="Enter Location (City, State)">
+            <div class="input-group-append">
+              <!-- map-marker-alt -->
+              <button class="btn btn-info" type="button" title="Location"><i class="fas fa-location-arrow fa-lg"></i></button>
+            </div>
+
+          </div>
+          <div class="form-group mt-3">
+            <input class="btn btn-success btn-block" type="submit" value="Submit">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

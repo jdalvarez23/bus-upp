@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>BusUp! | Home</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/lux/bootstrap.min.css">
+  <!-- Font CSS -->
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <!-- Weather Icons -->
+  <link rel="stylesheet" href="assets/css/weather-icons.min.css">
+  <link rel="stylesheet" href="assets/css/weather-icons-wind.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <style>
+    body {
+      padding-top: 54px;
+    }
+
+    @media (min-width: 992px) {
+      body {
+        padding-top: 56px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand home_Btn" style="cursor: pointer; color: #fff;">BusUp!</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li id="home_Nav" class="nav-item">
+            <a class="nav-link home_Btn" style="cursor: pointer;">Home
+                <span class="sr-only">(current)</span>
+              </a>
+          </li>
+          <li id="bus_Tracker_Nav" class="nav-item">
+            <a class="nav-link bus_Tracker_Btn" style="cursor: pointer;">Bus Tracker</a>
+          </li>
+          <li id="weather_Nav" class="nav-item">
+            <a class="nav-link weather_Btn" style="cursor: pointer;">Weather Page</a>
+          </li>
+          <li id="settings_Nav" class="nav-item">
+            <a class="nav-link settings_Btn" style="cursor: pointer;">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Content -->
+  <div class="loader_Center">
+    <div class="loader"></div>
+  </div>
+  <!-- Sign Up Page -->
+  <div id="sign_Up_Page" class="container hide">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 class="mt-5">Welcome to <span class="brand-font">BusUp!</span></h1>
+        <p class="lead">An app created to keep you informed!</p>
+        <hr>
+      </div>
+      <div class="col-md-6 offset-md-3">
+        <div id="sign_Up_Page_Alert" class="alert alert-danger hide">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4 class="alert-heading">Warning!</h4>
+          <p id="alert_Description" class="mb-0"></p>
+        </div>
+        <h4 id="getStarted_Header" class="text-center">Let's get started!</h4>
+        <form id="register_Form">
+          <fieldset>
+            <div class="form-group">
+              <label for="first_Name">First Name</label>
+              <input type="text" name="name" class="form-control" id="first_Name" placeholder="Enter First Name">
+            </div>
+            <p><span class="brand-font">BusUp!</span> lets you see the forecast for your location. Please enter your location below:</p>
+            <div class="input-group">
+              <input type="text" name="location" class="form-control" id="location" placeholder="Enter Location (City, State)">
+              <div class="input-group-append">
+                <!-- map-marker-alt -->
+                <button class="btn btn-info" type="button" title="Location"><i class="fas fa-location-arrow fa-lg"></i></button>
+              </div>
+
+            </div>
+            <div class="form-group mt-3">
+              <input class="btn btn-success btn-block" type="submit" value="Submit">
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Welcome Back Page -->
+  <div id="welcome_Back_Page" class="container hide">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 class="mt-5"><span class="brand-font">BusUp!</span></h1>
+        <hr>
+      </div>
+      <div class="col-md-6 offset-md-3">
+        <h4 class="text-center">Welcome back, <span id="first_Name_Display" class="text-info">First Name</span>!</h4>
+        <p>Here are some quick links to get you started:</p>
+        <button type="button" class="btn btn-info btn-block bus_Tracker_Btn_Alt">Bus Tracker</button>
+        <button type="button" class="btn btn-success btn-block weather_Btn_Alt">Weather</button>
+      </div>
+    </div>
+  </div>
+  <!-- Bus Tracker Page -->
+  <div id="bus_Tracker_Page" class="container hide">
+    <div class="row">
+      <div id="bus_Tracker_Page_Route_Search" class="col-md-6 offset-md-3 mt-5">
+        <h1 class="text-center">Bus Tracker</h1>
+        <p class="text-center"><span class="brand-font">BusUp!</span> lets you track the buses in your route. Insert a bus name, or select a bus to begin viewing arrival times.</p>
+        <hr>
+        <div id="bus_Route_Div" class="">
+          <div class="form-group">
+            <input id="filter_Routes" type="text" class="form-control" placeholder="Search Routes">
+          </div>
+          <div id="bus_Route_List" class="route_List list-group mb-5">
+          </div>
+        </div>
+      </div>
+      <div id="bus_Tracker_Page_Stop_Search" class="col-md-6 offset-md-3 mt-5 hide">
+        <h1 class="text-center">Bus Tracker</h1>
+        <p class="text-center">Select a stop for Route <span id="bus_Stop_Search_Route_Display"></span>.</p>
+        <div id="bus_Stop_Div">
+          <div class="form-group">
+            <input type="text" class="form-control" id="filter_Stops" placeholder="Search Stops">
+          </div>
+          <div id="bus_Stop_Div_List" class="list-group mb-5">
+
+          </div>
+        </div>
+      </div>
+      <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5 hide">
+        <h1 class="text-center">Bus Tracker</h1>
+        <h5 class="text-center">Arrival Times for <span class="text-info">Route #</span> heading <span class="text-info">Direction</span></h5>
+        <div id="Bus_Arrival_Times_Div" class="mt-3">
+          <div class="form-group">
+            <label for="bus_Direction_Select">Direction</label>
+            <select class="form-control" id="bus_Direction_Select">
+              <option>Northbound</option>
+              <option>Eastbound</option>
+              <option>Westbound</option>
+              <option>Southbound</option>
+            </select>
+          </div>
+          <hr>
+          <button type="button" class="btn btn-success btn-block">Save Stop</button>
+          <button type="button" class="btn btn-outline-info btn-block">Refresh</button>
+          <hr>
+          <p>As of 00:00 AM:</p>
+          <div class="list-group mb-5">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-2 hide">
+              <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1">Route 150</h4>
+                <h4 class="text-info">60 Min</h4>
+              </div>
+              <p class="pull-right mb-1">To Union State | Bus #: 1111</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Weather Page -->
+  <div id="weather_Page" class="container hide">
+    <div class="row">
+      <div id="weather_Div" class="col-md-6 offset-md-3 mt-5">
+        <h1 class="text-center">Weather</h1>
+        <p class="text-center"><span class="brand-font">BusUp!</span> provides you with your selected location's forecast.</p>
+        <hr>
+          <div id="weather_Card_Div" class="col-md-12 mb-3">
+            <p class="text-center lead hide">You have not selected a location.</p>
+            <div id="right_Now_Weather_Card" class="card border-primary mb-3" style="max-width: 20rem;">
+              <div class="card-header text-primary">Right Now</div>
+              <div class="card-body">
+                <p class="card-title text-center"><i class="wi wi-day-sunny wi-md"></i></p>
+                <h5 class="text-center">87° - Partly Cloudy</h5>
+              </div>
+            </div>
+            <hr>
+            <div id="other_Weathers">
+              <div id="today_Weather_Card" class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header text-primary">Today</div>
+                <div class="card-body">
+                  <p class="card-title text-center"><i class="wi wi-day-sunny wi-md"></i></p>
+                  <h5 class="text-center">87° - Partly Cloudy</h5>
+                  <p class="card-text text-center">A little description here.</p>
+                </div>
+              </div>
+              <hr>
+              <div id="next_Hours_Card" class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header text-primary">Next Hours</div>
+                <div class="card-body">
+                  <div id="next_Hour_Div" class="mb-3">
+                    <p class="card-title text-center"><i class="wi wi-day-sunny wi-md"></i></p>
+                    <h5 class="text-center">87° - Partly Cloudy</h5>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div id="next_Days_Card" class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header text-primary">Next Days</div>
+                <div class="card-body">
+                  <div id="next_Day_Div" class="mb-3">
+                    <small class="pull-left">00/00/0000</small>
+                    <p class="card-title text-center"><i class="wi wi-day-sunny wi-md"></i></p>
+                    <h5 class="text-center">87° - Partly Cloudy</h5>
+                    <p class="card-text text-center">A little description here.</p>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="hide">
+    <!-- Route Card -->
+    <a id="bus_Route_Card" class="list-group-item list-group-item-action flex-column align-items-start hide" style="cursor: pointer;" data-routename="" data-route="">
+      <div class="d-flex w-100 justify-content-between">
+        <h4 class="mb-1">Route 150</h4>
+      </div>
+      <p class="pull-right mb-1">Route Name</p>
+    </a>
+    <!-- Stop Card -->
+    <a id="bus_Stop_Card" class="list-group-item list-group-item-action flex-column align-items-start hide" style="cursor: pointer;" data-stopname="" data-stopid="">
+      <div class="d-flex w-100 justify-content-between">
+        <h4>Stop Name</h4>
+      </div>
+    </a>
+    <!-- Bus Route Time Card -->
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-2 hide">
+      <div class="d-flex w-100 justify-content-between">
+        <h4 class="mb-1">Route 150</h4>
+        <h4 class="text-success">60 Min</h4>
+      </div>
+      <p class="pull-right mb-1">To Union State | Bus #: 1111</p>
+    </a>
+  </div>
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+  <script src="assets/js/bootbox.js"></script>
+  <script src="assets/js/index.js"></script>
+</body>
+
+</html>
