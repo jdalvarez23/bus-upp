@@ -67,6 +67,7 @@
 
     // Processing phase
     $(submittedData).each(function(i, field) {
+      console.log(field.name);
       dataObjects[field.name] = field.value; // set respective values to field names
     });
 
