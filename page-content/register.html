@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="form-group mt-3">
-            <button type="button"  name="submit" class="btn btn-success btn-block">Submit</button>
+            <button id="register_Form_Button" type="button"  name="submit" class="btn btn-success btn-block">Submit</button>
           </div>
         </fieldset>
       </form>
@@ -36,9 +36,9 @@
 </div>
 <script type="text/javascript">
   // Execute when register form is submitted
-  $('#register_Form').on('submit', function(e) {
+  $('#register_Form_Button').on('click', function(e) {
     // Initialization phase
-    var submittedData = $(this).serializeArray(); // initialize serialized array of form data variable
+    var submittedData = $('#register_Form').serializeArray(); // initialize serialized array of form data variable
     var dataObjects = {}; // initialize data object variable
     var attempt; // initialize attempt variable
     var error = false; // initialize error variable
