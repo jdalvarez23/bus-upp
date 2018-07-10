@@ -123,3 +123,62 @@ function displayError(id, message) {
   $(id).find("#alert_Description").html(message);
   $(id).removeClass('hide');
 }
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+          console.log("Valid...");
+          form.classList.add('was-validated');
+          submitForm(); // method called to submit form
+      }, false);
+    });
+  }, false);
+})();
+
+// Execute when register form has been validated
+function submitForm() {
+  // Initialization phase
+  var submittedData = $('#register_Form').serializeArray(); // initialize serialized array of form data variable
+  var dataObjects = {}; // initialize data object variable
+  var attempt; // initialize attempt variable
+  dataObjects.registered = "true"; // set registered value in object to true
+
+  // Processing phase
+  for (var i = 0; i < submittedData.length; i++) {
+    dataObjects[field.name] = field.value; // set object key values
+  }
+
+  // Execute if location meets regular expression syntax
+  if (/[\w ]+, \w{2}/.test(dataObjects['location'])) {
+    console.log('Valid location input');
+  // Execute if location does not meet regular expression syntax
+  } else {
+    // Display error notification
+    displayError("#sign_Up_Page_Alert", 'Invalid location inserted. Please insert your location in the following format: City, State. For example: "Chicago, IL"');
+  }
+
+  dataObjects.savedStops = ''; // initialize saved stops value in data object
+
+  console.log(dataObjects);
+
+  // Execute if attempt is first time
+  if ($('#getStarted_Header').text() == "Let's get started!") {
+    attempt = "firstTime"; // set value to first time
+  // Execute if attempt is data update
+  } else if ($('#getStarted_Header').text() == "Edit your information") {
+    attempt = "update"; // set value to update
+  }
+
+  // Execute if no error is present
+    writeData(attempt, dataObjects); // method called to write user information to indexedDB
+};
