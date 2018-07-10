@@ -36,7 +36,7 @@
 </div>
 <script type="text/javascript">
   // Execute when register form is submitted
-  $('#register_Form').on('submit', function(e) {
+  $('body').on('submit', '#register_Form',function(e) {
     e.preventDefault();
     // Initialization phase
     var submittedData = $(this).serializeArray(); // initialize serialized array of form data variable
