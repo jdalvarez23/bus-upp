@@ -47,7 +47,7 @@
     // Processing phase
     $(submittedData).each(function(i, field) {
       // Execute if field value is empty
-      if ($("#" + field.name).val().length == 0) {
+      if ($(field).val().length == 0) {
         displayError("#sign_Up_Page_Alert", 'Values cannot be empty.');
         return;
       } else {
