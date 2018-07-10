@@ -54,6 +54,8 @@
           event.preventDefault();
           event.stopPropagation();
         } else if (form.checkValidity() == true) {
+          event.preventDefault();
+          event.stopPropagation();
           form.classList.add('was-validated');
           submitForm(); // method called to submit form
         }
@@ -99,5 +101,5 @@
 
     // Execute if no error is present
       writeData(attempt, dataObjects); // method called to write user information to indexedDB
-  });
+  };
 </script>
