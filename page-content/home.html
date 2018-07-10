@@ -35,15 +35,22 @@
     <div class="col-md-6 offset-md-3">
       <h4 class="text-center">Welcome back, <span id="first_Name_Display" class="text-info">First Name</span>!</h4>
       <p>Here are some quick links to get you started:</p>
-      <button type="button" class="btn btn-info btn-block bus_Tracker_Btn_Alt">Bus Tracker</button>
-      <button type="button" class="btn btn-success btn-block weather_Btn_Alt">Weather</button>
+      <button type="button" class="btn btn-info btn-block bus_Tracker_Btn">Bus Tracker</button>
+      <button type="button" class="btn btn-success btn-block weather_Btn">Weather</button>
     </div>
   </div>
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
-    console.log("Home -----------------------");
-    console.log(userInformation);
     $('#first_Name_Display').text(userInformation.name); // set text to user name
+
+    $(".bus_Tracker_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("routes"); // display the bus routes page
+    });
   });
 </script>

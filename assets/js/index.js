@@ -16,6 +16,28 @@ $(document).ready(function() {
   fetchData(); // method called to fetch user information from indexedDB
 });
 
+// Function to detect mobile device
+var isMobile = {
+  Android: function() {
+    return navigator.userAgent.match(/Android/i);
+  },
+  BlackBerry: function() {
+    return navigator.userAgent.match(/BlackBerry/i);
+  },
+  iOS: function() {
+    return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+  },
+  Opera: function() {
+    return navigator.userAgent.match(/Opera Mini/i);
+  },
+  Windows: function() {
+      return navigator.userAgent.match(/IEMobile/i);
+  },
+  any: function() {
+    return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+  }
+};
+
 // Initialize Database Function (Initialize the IndexedDB)
 function initializeDatabase() {
   db = new Dexie("busUp_Database"); // create new indexedDB
