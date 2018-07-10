@@ -58,6 +58,6 @@ function displayPage(page) {
     console.log(pageURL);
     setTimeout(function() {
       $("#main_Content").load(pageURL);
-    }, 3000);
+    }, 2000);
   });
 }
