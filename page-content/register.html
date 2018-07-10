@@ -91,6 +91,7 @@
     // Execute if no error is present
     if (error != true) {
       writeData(attempt, dataObjects); // method called to write user information to indexedDB
+      error = false;
     }
   });
 </script>
