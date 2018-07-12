@@ -37,7 +37,7 @@
           <input id="filter_Routes" type="text" class="form-control" placeholder="Search Routes">
         </div>
         <div id="bus_Route_List" class="route_List list-group mb-5">
-          <div class="loader_Center hide">
+          <div class="loader_Center">
             <div class="loader"></div>
           </div>
         </div>
@@ -83,6 +83,18 @@
           $('.navbar-toggler').click(); // close the navigation bar
         }
         displayPage("settings"); // display the settings page
+    });
+
+    // Filter Routes Function (filters and hides bus route cards based on user input)
+    $('#filter_Routes').keyup(function() {
+      var rex = new RegExp($(this).val(), 'i');
+      $('#bus_Route_List a').addClass('hide');
+      $('#bus_Route_List a').filter(function() {
+        return rex.test($(this).attr('data-routename'));
+      }).removeClass('hide');
+      $('#bus_Route_List a').filter(function() {
+        return rex.test($(this).attr('data-route'));
+      }).removeClass('hide');
     });
   });
 

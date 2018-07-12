@@ -147,30 +147,6 @@ function displayError(id, message) {
   $(id).removeClass('hide');
 }
 
-// Filter Routes Function (filters and hides bus route cards based on user input)
-$('#filter_Routes').keyup(function() {
-  var rex = new RegExp($(this).val(), 'i');
-  $('#bus_Route_List a').addClass('hide');
-  $('#bus_Route_List a').filter(function() {
-    return rex.test($(this).attr('data-routename'));
-  }).removeClass('hide');
-  $('#bus_Route_List a').filter(function() {
-    return rex.test($(this).attr('data-route'));
-  }).removeClass('hide');
-});
-
-// Filter Stops Function (filters and hides bus stops cards based on user input)
-$('#filter_Stops').keyup(function() {
-  var rex = new RegExp($(this).val(), 'i');
-  $('#bus_Stop_Div_List a').addClass('hide');
-  $('#bus_Stop_Div_List a').filter(function() {
-    return rex.test($(this).attr('data-stopname'));
-  }).removeClass('hide');
-  $('#bus_Route_List a').filter(function() {
-    return rex.test($(this).attr('data-stopid'));
-  }).removeClass('hide');
-});
-
 // Alert Error Function (displays a customized error message)
 function bootBoxError(errorMessage) {
   bootbox.alert({
