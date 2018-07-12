@@ -1,0 +1,58 @@
+<!-- Bus Tracker Page -->
+<div id="bus_Tracker_Page" class="container">
+  <div class="row">
+    <div id="bus_Tracker_Page_Route_Search" class="col-md-6 offset-md-3 mt-5">
+      <h1 class="text-center">Bus Tracker</h1>
+      <p class="text-center"><span class="brand-font">BusUp!</span> lets you track the buses in your route. Insert a bus name, or select a bus to begin viewing arrival times.</p>
+      <hr>
+      <div id="bus_Route_Div" class="">
+        <div class="form-group">
+          <input id="filter_Routes" type="text" class="form-control" placeholder="Search Routes">
+        </div>
+        <div id="bus_Route_List" class="route_List list-group mb-5">
+        </div>
+      </div>
+    </div>
+    <div id="bus_Tracker_Page_Stop_Search" class="col-md-6 offset-md-3 mt-5 hide">
+      <h1 class="text-center">Bus Tracker</h1>
+      <p class="text-center">Select a stop for Route <span id="bus_Stop_Search_Route_Display"></span>.</p>
+      <div id="bus_Stop_Div">
+        <div class="form-group">
+          <input type="text" class="form-control" id="filter_Stops" placeholder="Search Stops">
+        </div>
+        <div id="bus_Stop_Div_List" class="list-group mb-5">
+
+        </div>
+      </div>
+    </div>
+    <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5 hide">
+      <h1 class="text-center">Bus Tracker</h1>
+      <h5 class="text-center">Arrival Times for <span class="text-info">Route #</span> heading <span class="text-info">Direction</span></h5>
+      <div id="Bus_Arrival_Times_Div" class="mt-3">
+        <div class="form-group">
+          <label for="bus_Direction_Select">Direction</label>
+          <select class="form-control" id="bus_Direction_Select">
+            <option>Northbound</option>
+            <option>Eastbound</option>
+            <option>Westbound</option>
+            <option>Southbound</option>
+          </select>
+        </div>
+        <hr>
+        <button type="button" class="btn btn-success btn-block">Save Stop</button>
+        <button type="button" class="btn btn-outline-info btn-block">Refresh</button>
+        <hr>
+        <p>As of 00:00 AM:</p>
+        <div class="list-group mb-5">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-2 hide">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Route 150</h4>
+              <h4 class="text-info">60 Min</h4>
+            </div>
+            <p class="pull-right mb-1">To Union State | Bus #: 1111</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
