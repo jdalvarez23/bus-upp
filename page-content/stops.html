@@ -75,8 +75,7 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
-    console.log("Route: ", selectedRoute);
-    console.log("Direction: ". selectedDirection);
+    $("#bus_Stop_Search_Route_Display").text(selectedRoute); // set text display to route number
     fetchStops(selectedRoute, selectedDirection);
 
     $(".bus_Tracker_Btn").click(function() {
