@@ -37,7 +37,7 @@
           <input id="filter_Routes" type="text" class="form-control" placeholder="Search Routes">
         </div>
         <div id="bus_Route_List" class="route_List list-group mb-5">
-          <div class="loader_Center">
+          <div class="loader_Center hide" style="top: 125% !important;">
             <div class="loader"></div>
           </div>
         </div>
@@ -117,7 +117,7 @@
       },
       // Execute when AJAX request is sent/complete
       complete: function() {
-        //$(".loader_Center").remove(); // hides and removes loader from site (prevent performance issues)
+        $(".loader_Center").remove(); // hides and removes loader from site (prevent performance issues)
       },
       // Execute when AJAX request successfully returns data
       success: function(data) {
