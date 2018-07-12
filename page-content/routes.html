@@ -32,54 +32,148 @@
       <h1 class="text-center">Bus Tracker</h1>
       <p class="text-center"><span class="brand-font">BusUp!</span> lets you track the buses in your route. Insert a bus name, or select a bus to begin viewing arrival times.</p>
       <hr>
-      <div id="bus_Route_Div" class="">
+      <div id="bus_Route_Div">
         <div class="form-group">
           <input id="filter_Routes" type="text" class="form-control" placeholder="Search Routes">
         </div>
         <div id="bus_Route_List" class="route_List list-group mb-5">
-        </div>
-      </div>
-    </div>
-    <div id="bus_Tracker_Page_Stop_Search" class="col-md-6 offset-md-3 mt-5 hide">
-      <h1 class="text-center">Bus Tracker</h1>
-      <p class="text-center">Select a stop for Route <span id="bus_Stop_Search_Route_Display"></span>.</p>
-      <div id="bus_Stop_Div">
-        <div class="form-group">
-          <input type="text" class="form-control" id="filter_Stops" placeholder="Search Stops">
-        </div>
-        <div id="bus_Stop_Div_List" class="list-group mb-5">
-
-        </div>
-      </div>
-    </div>
-    <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5 hide">
-      <h1 class="text-center">Bus Tracker</h1>
-      <h5 class="text-center">Arrival Times for <span class="text-info">Route #</span> heading <span class="text-info">Direction</span></h5>
-      <div id="Bus_Arrival_Times_Div" class="mt-3">
-        <div class="form-group">
-          <label for="bus_Direction_Select">Direction</label>
-          <select class="form-control" id="bus_Direction_Select">
-            <option>Northbound</option>
-            <option>Eastbound</option>
-            <option>Westbound</option>
-            <option>Southbound</option>
-          </select>
-        </div>
-        <hr>
-        <button type="button" class="btn btn-success btn-block">Save Stop</button>
-        <button type="button" class="btn btn-outline-info btn-block">Refresh</button>
-        <hr>
-        <p>As of 00:00 AM:</p>
-        <div class="list-group mb-5">
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-2 hide">
-            <div class="d-flex w-100 justify-content-between">
-              <h4 class="mb-1">Route 150</h4>
-              <h4 class="text-info">60 Min</h4>
-            </div>
-            <p class="pull-right mb-1">To Union State | Bus #: 1111</p>
-          </a>
+          <div class="loader_Center hide">
+            <div class="loader"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    fetchAllBusRoutes(); // method called to retrieve all bus routes
+
+    $(".bus_Tracker_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("routes"); // display the bus routes page
+    });
+
+    $(".home_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("home"); // display the home page
+    });
+
+    $(".weather_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("weather"); // display the weather page
+    });
+
+    $(".settings_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("settings"); // display the settings page
+    });
+  });
+
+  // Fetch Bus Routes Function (Retrieve all bus routes through CTA Bus API)
+  function fetchAllBusRoutes() {
+    searchURL = baseURL + "getroutes"; // set custom search URL for API call
+    console.log("Search URL: ", searchURL);
+
+    // perfom asynchronous HTTP (Ajax) request
+    $.ajax({
+      url: apiPassThruUrl,
+      dataType: 'json',
+      method: 'GET',
+      data: {"apiEndpoint": searchURL,
+             "key": apiKey,
+             "format": "json"},
+      // Execute before AJAX request is sent
+      beforeSend: function () {
+        $(".loader_Center").removeClass("hide"); // display loader while AJAX fetches data
+      },
+      // Execute when AJAX request is sent/complete
+      complete: function() {
+        $(".loader_Center").remove(); // hides and removes loader from site (prevent performance issues)
+      },
+      // Execute when AJAX request successfully returns data
+      success: function(data) {
+        console.log(data);
+        console.log(data['bustime-response']['routes']);
+
+        $.each(data['bustime-response']['routes'], function(i, v) {
+          var newBusCard = $('#bus_Route_Card').clone(); // clone route card template
+          newBusCard.removeAttr('id'); // remove id of clone
+          newBusCard.find('h4').text('Route ' + v.rt); // set route number
+          newBusCard.find('p').text(v.rtnm); // set route name
+          newBusCard.attr('data-route', 'Route ' + v.rt); // set route number to data attribute
+          newBusCard.attr('data-routename',  v.rtnm); // set route name to data attribute
+          newBusCard.removeClass('hide'); // display card
+          newBusCard.appendTo('#bus_Route_List'); // append to route list div
+
+          // Execute when user selects bus route
+          newBusCard.on('click', function() {
+            var options = []; // initialize options array
+            selectedRoute = v.rt; // set selected route value to variable
+
+            // method that fetches route directions for selected route
+            var directions = fetchRouteDirections(selectedRoute).done(function(result) {
+
+              $.each(result['bustime-response']['directions'], function(i, v) {
+                options.push({text: v.dir, value: v.dir}); // push directions to options array
+               });
+
+               console.log(options);
+
+               // Execute if no options are returned
+               if (!options) {
+                 console.log('ERROR: Data not pushed into array!');
+               // Execute if options are returned
+               } else {
+                 console.log('SUCCESS: Data pushed into array!');
+                 options.unshift({text: "Select Direction", value: ""});
+                 var promptOptions = {
+                   title: "Direction",
+                   inputType: 'select',
+                   inputOptions: options,
+                   callback: function (result) {
+                     console.log("Result", result);
+                     selectedDirection = result; // set selected direction value to variable
+                     displayPage("stops"); // display the bus stops page
+                   }
+                 };
+                 bootbox.prompt(promptOptions); // prompt directions
+               }
+            });
+          });
+        });
+      }
+    });
+  }
+
+  // Fetch Bus Route Directions Function (Retrieve all bus route directions for specified route through CTA Bus API)
+  function fetchRouteDirections(routeNum) {
+    searchURL = baseURL + "getdirections?key=" + apiKey + "&rt=" + routeNum + "&format=json"; // set custom search URL for API call
+
+    // return bus route directions found for specified route
+    return $.ajax({
+      url: apiPassThruUrl,
+      dataType: 'json',
+      method: 'GET',
+      data: {"apiEndpoint": searchURL,
+             "key": apiKey,
+             "format": "json"}
+    });
+  }
+</script>

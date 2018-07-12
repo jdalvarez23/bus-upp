@@ -2,7 +2,9 @@
 var db = ""; // initialize database variable
 var databasePopulated = false; // initalize boolean variable
 var userInformation; // initialize user information variable
-
+var selectedRoute; // initialize user-selected route variable
+var selectedStop; // initialize user-selected route stop variable
+var selectedDirection; // initialize user-selected route direction variable
 // Bus API Variables
 var apiKey = 'hfn2fy3Ph6wRLreQtTJfRvR3S';
 var endText = '&format=json';

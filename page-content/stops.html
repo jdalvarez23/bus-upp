@@ -1,0 +1,168 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand home_Btn" style="cursor: pointer; color: #fff;">BusUp!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li id="home_Nav" class="nav-item">
+          <a class="nav-link home_Btn" style="cursor: pointer;">Home
+              <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li id="bus_Tracker_Nav" class="nav-item">
+          <a class="nav-link bus_Tracker_Btn" style="cursor: pointer;">Bus Tracker</a>
+        </li>
+        <li id="weather_Nav" class="nav-item">
+          <a class="nav-link weather_Btn" style="cursor: pointer;">Weather Page</a>
+        </li>
+        <li id="settings_Nav" class="nav-item">
+          <a class="nav-link settings_Btn" style="cursor: pointer;">Settings</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Routes Page Content -->
+<div id="bus_Tracker_Page" class="container">
+  <div class="row">
+    <div id="bus_Tracker_Page_Stop_Search" class="col-md-6 offset-md-3 mt-5">
+      <h1 class="text-center">Bus Tracker</h1>
+      <p class="text-center">Select a stop for Route <span id="bus_Stop_Search_Route_Display"></span>.</p>
+      <div id="bus_Stop_Div">
+        <div class="form-group">
+          <input type="text" class="form-control" id="filter_Stops" placeholder="Search Stops">
+        </div>
+        <div id="bus_Stop_Div_List" class="list-group mb-5">
+          <div class="loader_Center hide">
+            <div class="loader"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5 hide">
+      <h1 class="text-center">Bus Tracker</h1>
+      <h5 class="text-center">Arrival Times for <span class="text-info">Route #</span> heading <span class="text-info">Direction</span></h5>
+      <div id="Bus_Arrival_Times_Div" class="mt-3">
+        <div class="form-group">
+          <label for="bus_Direction_Select">Direction</label>
+          <select class="form-control" id="bus_Direction_Select">
+            <option>Northbound</option>
+            <option>Eastbound</option>
+            <option>Westbound</option>
+            <option>Southbound</option>
+          </select>
+        </div>
+        <hr>
+        <button type="button" class="btn btn-success btn-block">Save Stop</button>
+        <button type="button" class="btn btn-outline-info btn-block">Refresh</button>
+        <hr>
+        <p>As of 00:00 AM:</p>
+        <div class="list-group mb-5">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-2 hide">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Route 150</h4>
+              <h4 class="text-info">60 Min</h4>
+            </div>
+            <p class="pull-right mb-1">To Union State | Bus #: 1111</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    console.log("Route: ", selectedRoute);
+    console.log("Direction: ". selectedDirection);
+    fetchStops(selectedRoute, selectedDirection);
+
+    $(".bus_Tracker_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("routes"); // display the bus routes page
+    });
+
+    $(".home_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("home"); // display the home page
+    });
+
+    $(".weather_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("weather"); // display the weather page
+    });
+
+    $(".settings_Btn").click(function() {
+        // Execute if the user is on a mobile device
+        if (isMobile.any()) {
+          console.log("You are on a mobile device.");
+          $('.navbar-toggler').click(); // close the navigation bar
+        }
+        displayPage("settings"); // display the settings page
+    });
+  });
+
+  // Fetch Bus Route Stops Function (Retrieve all bus route stops for specified route and direction through CTA Bus API)
+  function fetchStops(routeNum, direction) {
+    // Execute if direction is empty
+    if (direction == "") {
+      bootBoxError("You did not select a direction. Try again!"); // alert an error
+    // Execute if direction is not empty
+    } else {
+      searchURL = baseURL + "getstops?key=" + apiKey + "&rt=" + routeNum + "&dir=" + direction + "&format=json"; // set custom search URL for API call
+      console.log(searchURL);
+
+      // perfom asynchronous HTTP (Ajax) request
+      $.ajax({
+        url: apiPassThruUrl,
+        dataType: 'json',
+        method: 'GET',
+        data: {"apiEndpoint": searchURL,
+               "key": apiKey,
+               "format": "json"},
+        // Execute before AJAX request is sent
+        beforeSend: function () {
+          $(".loader_Center").removeClass("hide"); // display loader while AJAX fetches data
+        },
+        // Execute when AJAX request is sent/complete
+        complete: function() {
+          $(".loader_Center").remove(); // hides and removes loader from site (prevent performance issues)
+        },
+        // Execute when AJAX request successfully returns data
+        success: function(data) {
+          console.log(data);
+          console.log(data['bustime-response']['stops']);
+
+          $.each(data['bustime-response']['stops'], function(i, v) {
+            var newBusCard = $('#bus_Stop_Card').clone(); // clone route stop card
+            newBusCard.removeAttr('id'); // remove id of clone
+            newBusCard.find('h4').text(v.stpnm); // set stop name
+            newBusCard.attr('data-stopname', v.stpnm); // set stop name to data attribute
+            newBusCard.attr('data-stopid', v.stpid); // set stop id to data attribute
+            newBusCard.removeClass('hide'); // display card
+            newBusCard.appendTo('#bus_Stop_Div_List'); // append to stop list div
+
+            // Execute when user selects bus stop
+            newBusCard.on('click', function() {
+              // Function goes here
+            });
+          });
+        }
+      });
+    }
+  }
+</script>
