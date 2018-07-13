@@ -52,6 +52,7 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
+    console.log(selectedDirection);
     $("#bus_Stop_Route_Display").text("Route #" + selectedRoute); // set text display to route number
     $("#bus_Stop_Direction_Display").text(selectedDirection); // set text display to route direction
     $("#bus_Direction_Select option[value=" + selectedDirection + "]").prop("selected", true); // set select input to route direction
@@ -103,8 +104,8 @@
     });
 
     $("#bus_Direction_Select").change(function() {
-      selectedDirection = $("#bus_Direction_Select option:selected").val(); // retrieve direction from select and set value to variable
-      fetchNewArrivalTimes(selectedRoute, selectedDirection); // method called to retrieve new arrival times for selected stop
+      var newDirection = $("#bus_Direction_Select option:selected").val(); // retrieve direction from select and set value to variable
+      fetchNewArrivalTimes(selectedRoute, newDirection); // method called to retrieve new arrival times for selected stop
     });
 });
 
@@ -153,12 +154,26 @@
           // Execute if API does not return error
           } else {
             $.each(data['bustime-response']['prd'], function(i, v) {
+              var specialText; // initialize special text variable
+
+              // Execute if product countdown time is "due"
+              if (v.prdctdn == "DUE") {
+                specialText = ""; // set value to special text variable
+              // Execute if product countdown time is not "due"
+              } else {
+                specialText = " Min"; // set value to special text variable
+              }
+
               var newBusCard = $('#bus_Time_Card').clone(); // clone route stop card
               newBusCard.removeAttr('id'); // remove id of clone
               newBusCard.find('.route_Number').text('Route ' + v.rt); // set route name
-              newBusCard.find('.time_Number').text(v.prdctdn + ' Min'); // set countdown time
+              newBusCard.find('.time_Number').text(v.prdctdn + specialText); // set countdown time
               newBusCard.find('p').text('To ' + v.des + ' | Bus #: ' + v.vid); // set destination name and vehicle id
               newBusCard.attr('data-direction', v.rtdir); // set route direction to data attribute
+              // Execute if product countdown timer is either 1 or "Due"
+              if (v.prdctdn == "DUE" || v.prdctdn == "1") {
+                newBusCard.find('.time_Number').addClass("text-success"); // set text green
+              }
               newBusCard.removeClass('hide'); // display card
               newBusCard.appendTo('#bus_Arrivals_Div_List'); // append to arrivals list div
 
@@ -207,6 +222,7 @@
 
           selectedStop = newArray[0]['stpid']; // set selected route stop id to variable
           selectedStopName = newArray[0]['stpnm']; // set selected route stop name to variable
+          selectedDirection = direction; // set selected direction to variable
           console.log(selectedStop);
 
           displayPage("arrivals"); // display the bus arrivals page
