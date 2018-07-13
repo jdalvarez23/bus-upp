@@ -120,7 +120,7 @@
         // Execute before AJAX request is sent
         beforeSend: function() {
           // Execute if loader exists in div
-          if ($(".loader_Center").length) {
+          if ($(".loader_Center").length {
             $(".loader_Center").removeClass("hide"); // display loader while AJAX fetches data
           // Execute if loader does not exist in div
           } else {
@@ -136,22 +136,30 @@
           console.log(data);
           console.log(data['bustime-response']['prd']);
 
-          $.each(data['bustime-response']['prd'], function(i, v) {
-            var newBusCard = $('#bus_Time_Card').clone(); // clone route stop card
-            newBusCard.removeAttr('id'); // remove id of clone
-            newBusCard.find('.route_Number').text('Route ' + v.rt); // set route name
-            newBusCard.find('.time_Number').text(v.prdctdn + ' Min'); // set countdown time
-            newBusCard.find('p').text('To ' + v.des + ' | Bus #: ' + v.vid); // set destination name and vehicle id
-            newBusCard.attr('data-direction', v.rtdir); // set route direction to data attribute
-            newBusCard.removeClass('hide'); // display card
-            newBusCard.appendTo('#bus_Arrivals_Div_List'); // append to arrivals list div
+          // Execute if API returns error
+          if (data['bustime-response']['error']) {
+            var errorMessage = data['bustime-response']['error'][0].msg; // initialize and set API error message
+            console.log("Error: ", errorMessage);
+            $("#bus_Arrivals_Div_List").append("<p class='text-center'>" + errorMessage + "</p>"); // append error message to arrivals list div
+          // Execute if API does not return error
+          } else {
+            $.each(data['bustime-response']['prd'], function(i, v) {
+              var newBusCard = $('#bus_Time_Card').clone(); // clone route stop card
+              newBusCard.removeAttr('id'); // remove id of clone
+              newBusCard.find('.route_Number').text('Route ' + v.rt); // set route name
+              newBusCard.find('.time_Number').text(v.prdctdn + ' Min'); // set countdown time
+              newBusCard.find('p').text('To ' + v.des + ' | Bus #: ' + v.vid); // set destination name and vehicle id
+              newBusCard.attr('data-direction', v.rtdir); // set route direction to data attribute
+              newBusCard.removeClass('hide'); // display card
+              newBusCard.appendTo('#bus_Arrivals_Div_List'); // append to arrivals list div
 
-            // Execute when user selects bus stop
-            // newBusCard.on('click', function() {
-            //   selectedStop = v.stpid; // set selected route stop value to variable
-            //   displayPage("arrivals"); // display the bus arrivals page
-            // });
-          });
+              // Execute when user selects bus stop
+              // newBusCard.on('click', function() {
+              //   selectedStop = v.stpid; // set selected route stop value to variable
+              //   displayPage("arrivals"); // display the bus arrivals page
+              // });
+            });
+          }
 
           var dateTime = moment().format("hh:mm A"); // initialize and set current local datetime variable
           $("#bus_Arrival_Timestamp").text("As of " + dateTime + ":"); // set arrival timestamp text
