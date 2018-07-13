@@ -28,24 +28,24 @@
 <!-- Routes Page Content -->
 <div id="bus_Tracker_Page" class="container">
   <div class="row">
-    <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5 hide">
+    <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5">
       <h1 class="text-center">Bus Tracker</h1>
       <h5 class="text-center">Arrival Times for <span id="bus_Stop_Route_Display" class="text-info">Route #</span> heading <span id="bus_Stop_Direction_Display" class="text-info">Direction</span></h5>
       <div id="Bus_Arrival_Times_Div" class="mt-3">
         <div class="form-group">
           <label for="bus_Direction_Select">Direction</label>
           <select class="form-control" id="bus_Direction_Select">
-            <option>Northbound</option>
-            <option>Eastbound</option>
-            <option>Westbound</option>
-            <option>Southbound</option>
+            <option value="Northbound">Northbound</option>
+            <option value="Eastbound">Eastbound</option>
+            <option value="Westbound">Westbound</option>
+            <option value="Southbound">Southbound</option>
           </select>
         </div>
         <hr>
         <button type="button" class="btn btn-success btn-block">Save Stop</button>
         <button type="button" class="btn btn-outline-info btn-block">Refresh</button>
         <hr>
-        <p>As of 00:00 AM:</p>
+        <p id="bus_Arrival_Timestamp">As of 00:00 AM:</p>
         <div id="bus_Arrivals_Div_List" class="list-group mb-5">
           <div class="loader_Center hide" style="top: 125% !important;">
             <div class="loader"></div>
@@ -59,6 +59,7 @@
   $(document).ready(function() {
     $("#bus_Stop_Route_Display").text("Route #" + selectedRoute); // set text display to route number
     $("#bus_Stop_Direction_Display").text(selectedDirection); // set text display to route direction
+    $("#bus_Direction_Select option[value=" + selectedDirection + "]").prop("selected", true); // set select input to route direction
     fetchArrivals(selectedStop);
 
     $(".bus_Tracker_Btn").click(function() {
@@ -97,8 +98,60 @@
         displayPage("settings"); // display the settings page
     });
 
-  // Fetch Bus Route Stops Function (Retrieve all bus route stops for specified route and direction through CTA Bus API)
+  // Fetch Bus Route Arrival Times Function (Retrieve all bus route arrival times for specified stop, route, and direction through CTA Bus API)
   function fetchArrivals(stopID) {
+    // Execute if stop ID is empty
+    if (stopID == "") {
+      bootBoxError("You did not select a stop. Try again later!"); // alert an error
+    // Execute if stop ID is not empty
+    } else {
+      searchURL = baseURL + "getpredictions?key=" + apiKey + "&rt=" + selectedRoute + "&stpid=" + stopID + "&format=json"; // set custom search URL for API call
+      console.log(searchURL);
 
+      // perfom asynchronous HTTP (Ajax) request
+      $.ajax({
+        url: apiPassThruUrl,
+        dataType: 'json',
+        method: 'GET',
+        data: {"apiEndpoint": searchURL,
+               "key": apiKey,
+               "format": "json"},
+        // Execute before AJAX request is sent
+        beforeSend: function () {
+          // Execute if loader exists in div
+          if ($(".loader_Center").length) {
+            $(".loader_Center").removeClass("hide"); // display loader while AJAX fetches data
+          // Execute if loader does not exist in div
+          } else {
+            $("#bus_Arrivals_Div_List").prepend("<div class='loader_Center' style='top: 125% !important;'><div class='loader'></div></div>"); // append preloader to bus arrival list div
+          }
+        },
+        // Execute when AJAX request is sent/complete
+        complete: function() {
+          $(".loader_Center").remove(); // hides and removes loader from site (prevent performance issues)
+        },
+        // Execute when AJAX request successfully returns data
+        success: function(data) {
+          console.log(data);
+          console.log(data['bustime-response']['stops']);
+
+          $.each(data['bustime-response']['stops'], function(i, v) {
+            var newBusCard = $('#bus_Stop_Card').clone(); // clone route stop card
+            newBusCard.removeAttr('id'); // remove id of clone
+            newBusCard.find('h4').text(v.stpnm); // set stop name
+            newBusCard.attr('data-stopname', v.stpnm); // set stop name to data attribute
+            newBusCard.attr('data-stopid', v.stpid); // set stop id to data attribute
+            newBusCard.removeClass('hide'); // display card
+            newBusCard.appendTo('#bus_Stop_Div_List'); // append to stop list div
+
+            // Execute when user selects bus stop
+            newBusCard.on('click', function() {
+              selectedStop = v.stpid; // set selected route stop value to variable
+              displayPage("arrivals"); // display the bus arrivals page
+            });
+          });
+        }
+      });
+    }
   }
 </script>
