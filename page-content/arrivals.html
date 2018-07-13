@@ -152,6 +152,9 @@
             //   displayPage("arrivals"); // display the bus arrivals page
             // });
           });
+
+          var dateTime = moment().format("hh:mm A"); // initialize and set current local datetime variable
+          $("#bus_Arrival_Timestamp").text("As of " + dateTime + ":"); // set arrival timestamp text
         }
       });
     }
