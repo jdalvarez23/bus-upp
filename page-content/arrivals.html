@@ -205,7 +205,10 @@
             return stopData.stpnm == selectedStopName;
           });
 
-          console.log(newArray);
+          var newStopID = newArray.stpid; // initialize and set new stop id variable
+          console.log(newStopID);
+
+          //fetchArrivals(newStopID);
         }
       });
     }
