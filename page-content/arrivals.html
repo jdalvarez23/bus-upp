@@ -38,7 +38,7 @@
         </div>
         <hr>
         <button type="button" class="btn btn-success btn-block">Save Stop</button>
-        <button type="button" class="btn btn-outline-info btn-block">Refresh</button>
+        <button type="button" class="btn btn-outline-info btn-block refresh_Btn">Refresh</button>
         <hr>
         <p id="bus_Arrival_Timestamp">As of 00:00 AM:</p>
         <div id="bus_Arrivals_Div_List" class="list-group mb-5">
@@ -101,6 +101,10 @@
           $('.navbar-toggler').click(); // close the navigation bar
         }
         displayPage("settings"); // display the settings page
+    });
+
+    $(".refresh_Btn").click(function() {
+        fetchNewArrivalTimes(selectedRoute, selectedDirection); // method called to retrieve new arrival times for selected stop
     });
 
     $("#bus_Direction_Select").change(function() {
