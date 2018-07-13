@@ -31,6 +31,7 @@
     <div id="bus_Tracker_Page_Arrival_Display" class="col-md-6 offset-md-3 mt-5">
       <h1 class="text-center">Bus Tracker</h1>
       <h5 class="text-center">Arrival Times for <span id="bus_Stop_Route_Display" class="text-info">Route #</span> heading <span id="bus_Stop_Direction_Display" class="text-info">Direction</span></h5>
+      <p id="bus_Stop_Name_Display" class="text-center">Stop Name</p>
       <div id="Bus_Arrival_Times_Div" class="mt-3">
         <div class="form-group">
           <label for="bus_Direction_Select">Direction</label>
@@ -55,6 +56,7 @@
     console.log(selectedDirection);
     $("#bus_Stop_Route_Display").text("Route #" + selectedRoute); // set text display to route number
     $("#bus_Stop_Direction_Display").text(selectedDirection); // set text display to route direction
+    $("#bus_Stop_Name_Display").text("At " + selectedStopName); // set text display to stop name
 
     // method that fetches route directions for selected route
     var directions = fetchRouteDirections(selectedRoute).done(function(result) {
