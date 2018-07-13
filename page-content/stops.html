@@ -47,7 +47,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $("#bus_Stop_Search_Route_Display").text(selectedRoute); // set text display to route number
-    fetchStops(selectedRoute, selectedDirection);
+    fetchStops(selectedRoute, selectedDirection); // method called to retrieve all bus stops for selected route
 
     $(".bus_Tracker_Btn").click(function() {
         // Execute if the user is on a mobile device
