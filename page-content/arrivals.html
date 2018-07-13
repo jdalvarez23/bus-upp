@@ -134,22 +134,23 @@
         // Execute when AJAX request successfully returns data
         success: function(data) {
           console.log(data);
-          console.log(data['bustime-response']['stops']);
+          console.log(data['bustime-response']['prd']);
 
-          $.each(data['bustime-response']['stops'], function(i, v) {
-            var newBusCard = $('#bus_Stop_Card').clone(); // clone route stop card
+          $.each(data['bustime-response']['prd'], function(i, v) {
+            var newBusCard = $('#bus_Time_Card').clone(); // clone route stop card
             newBusCard.removeAttr('id'); // remove id of clone
-            newBusCard.find('h4').text(v.stpnm); // set stop name
-            newBusCard.attr('data-stopname', v.stpnm); // set stop name to data attribute
-            newBusCard.attr('data-stopid', v.stpid); // set stop id to data attribute
+            newBusCard.find('.route_Number').text('Route ' + v.rt); // set route name
+            newBusCard.find('.time_Number').text(v.prdctdn + ' Min'); // set countdown time
+            newBusCard.find('p').text('To ' + v.des + ' | Bus #: ' + v.vid); // set destination name and vehicle id
+            newBusCard.attr('data-direction', v.rtdir); // set route direction to data attribute
             newBusCard.removeClass('hide'); // display card
-            newBusCard.appendTo('#bus_Stop_Div_List'); // append to stop list div
+            newBusCard.appendTo('#bus_Arrivals_Div_List'); // append to arrivals list div
 
             // Execute when user selects bus stop
-            newBusCard.on('click', function() {
-              selectedStop = v.stpid; // set selected route stop value to variable
-              displayPage("arrivals"); // display the bus arrivals page
-            });
+            // newBusCard.on('click', function() {
+            //   selectedStop = v.stpid; // set selected route stop value to variable
+            //   displayPage("arrivals"); // display the bus arrivals page
+            // });
           });
         }
       });
