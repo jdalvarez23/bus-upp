@@ -97,6 +97,7 @@
         }
         displayPage("settings"); // display the settings page
     });
+});
 
   // Fetch Bus Route Arrival Times Function (Retrieve all bus route arrival times for specified stop, route, and direction through CTA Bus API)
   function fetchArrivals(stopID) {
@@ -117,7 +118,7 @@
                "key": apiKey,
                "format": "json"},
         // Execute before AJAX request is sent
-        beforeSend: function () {
+        beforeSend: function() {
           // Execute if loader exists in div
           if ($(".loader_Center").length) {
             $(".loader_Center").removeClass("hide"); // display loader while AJAX fetches data
