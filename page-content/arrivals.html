@@ -157,6 +157,8 @@
             $("#bus_Arrivals_Div_List").append("<p class='text-center'>" + errorMessage + "</p>"); // append error message to arrivals list div
           // Execute if API does not return error
           } else {
+            $("#bus_Arrivals_Div_List").empty();
+
             $.each(data['bustime-response']['prd'], function(i, v) {
               var specialText; // initialize special text variable
 
@@ -229,7 +231,9 @@
           selectedDirection = direction; // set selected direction to variable
           console.log(selectedStop);
 
-          displayPage("arrivals"); // display the bus arrivals page
+          fetchArrivals(selectedStop); // method called to retrieve all arrival times for selected stop
+
+          // displayPage("arrivals"); // display the bus arrivals page
         }
       });
     }
