@@ -70,6 +70,7 @@
     fetchArrivals(selectedStop); // method called to retrieve all arrival times for selected stop
 
     setInterval(function() {
+      console.log("Automatically refreshing...");
       fetchArrivals(selectedStop); // method called to retrieve all arrival times for selected stop every 1 minute
     }, 60000);
 
