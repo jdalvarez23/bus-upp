@@ -45,7 +45,8 @@ var isMobile = {
 function initializeDatabase() {
   db = new Dexie("busUp_Database"); // create new indexedDB
   db.version(1).stores({ // store information on version one
-    users: '++id,registered,name,location,savedStops',
+    users: '++id,registered,name,location',
+    savedStops: '++id,stopID,stopName,routeID,routeName,routeDirection',
   });
 
   db.open(); // open connection to indexedDB
@@ -62,6 +63,11 @@ function fetchData() {
         databasePopulated = true;
         // Retrieve user data from indexedDB
         db.users.get(1, function(user) {
+          userInformation = user; // set user data to variable
+          console.log(userInformation);
+        });
+        // Retrieve user data from indexedDB
+        db.savedStops.get(1, function(user) {
           userInformation = user; // set user data to variable
           console.log(userInformation);
         });

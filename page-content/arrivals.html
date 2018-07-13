@@ -69,6 +69,10 @@
 
     fetchArrivals(selectedStop); // method called to retrieve all arrival times for selected stop
 
+    setInterval(function() {
+      fetchArrivals(selectedStop); // method called to retrieve all arrival times for selected stop every 1 minute
+    }, 60000);
+
     $(".bus_Tracker_Btn").click(function() {
         // Execute if the user is on a mobile device
         if (isMobile.any()) {
