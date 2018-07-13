@@ -141,6 +141,7 @@
             // Execute when user selects bus stop
             newBusCard.on('click', function() {
               selectedStop = v.stpid; // set selected route stop value to variable
+              selectedStopName = v.stpnm; // set selected route stop name to variable
               displayPage("arrivals"); // display the bus arrivals page
             });
           });

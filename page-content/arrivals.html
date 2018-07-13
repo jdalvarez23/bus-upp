@@ -101,6 +101,11 @@
         }
         displayPage("settings"); // display the settings page
     });
+
+    $("#bus_Direction_Select").change(function() {
+      var newDirection = $("#bus_Direction_Select option:selected").val(); // retrieve direction from select and set value to variable
+      fetchNewArrivalTimes(selectedRoute, newDirection); // method called to retrieve new arrival times for selected stop
+    });
 });
 
   // Fetch Bus Route Arrival Times Function (Retrieve all bus route arrival times for specified stop, route, and direction through CTA Bus API)
@@ -167,6 +172,40 @@
 
           var dateTime = moment().format("hh:mm A"); // initialize and set current local datetime variable
           $("#bus_Arrival_Timestamp").text("As of " + dateTime + ":"); // set arrival timestamp text
+        }
+      });
+    }
+  }
+
+  // Fetch New Direction Arrival Times Function (Retrieve all bus route arrival times for new direction)
+  function fetchNewArrivalTimes(route, direction) {
+    // Execute if route and direction are empty
+    if (route == "" || direction == "") {
+      bootBoxError("You did not select a route or direction. Try again later!"); // alert an error
+    // Execute if route and direction are not empty
+    } else {
+      searchURL = baseURL + "getstops?key=" + apiKey + "&rt=" + route + "&dir=" + direction + "&format=json"; // set custom search URL for API call
+      console.log(searchURL);
+
+      // perfom asynchronous HTTP (Ajax) request
+      $.ajax({
+        url: apiPassThruUrl,
+        dataType: 'json',
+        method: 'GET',
+        data: {"apiEndpoint": searchURL,
+               "key": apiKey,
+               "format": "json"},
+        // Execute when AJAX request successfully returns data
+        success: function(data) {
+          console.log(data);
+          console.log(data['bustime-response']['stops']);
+
+          // Filter Stops By Stop Name Function (filters and returns new array of stops with specified name)
+          var newArray = data['bustime-response']['stops'].filter(function(stopData) {
+            return stopData.stpnm == selectedStopName;
+          });
+
+          console.log(newArray);
         }
       });
     }
