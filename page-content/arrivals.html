@@ -55,7 +55,7 @@
     console.log(selectedDirection);
     $("#bus_Stop_Route_Display").text("Route #" + selectedRoute); // set text display to route number
     $("#bus_Stop_Direction_Display").text(selectedDirection); // set text display to route direction
-    $("#bus_Direction_Select option[value=" + selectedDirection + "]").prop("selected", true); // set select input to route direction
+    $("#bus_Direction_Select").val(selectedDirection); // set select input to route direction
 
     // method that fetches route directions for selected route
     var directions = fetchRouteDirections(selectedRoute).done(function(result) {
